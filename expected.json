@@ -1,0 +1,106 @@
+[
+  {
+    "fn": "lastBellTruth",
+    "args": [
+      "6:30",
+      3,
+      9
+    ],
+    "expected": "The 6:30 alarm with 3 snoozes of 9 minutes rings last at 6:57 - the alarm you set is not the alarm that wakes you."
+  },
+  {
+    "fn": "lastBellTruth",
+    "args": [
+      "7:00",
+      1,
+      10
+    ],
+    "expected": "The 7:00 alarm with 1 snooze of 10 minutes rings last at 7:10 - the alarm you set is not the alarm that wakes you."
+  },
+  {
+    "fn": "lastBellTruth",
+    "args": [
+      "5:45",
+      4,
+      9
+    ],
+    "expected": "The 5:45 alarm with 4 snoozes of 9 minutes rings last at 6:21 - the alarm you set is not the alarm that wakes you."
+  },
+  {
+    "fn": "lastBellTruth",
+    "args": [
+      "6:15",
+      2,
+      5
+    ],
+    "expected": "The 6:15 alarm with 2 snoozes of 5 minutes rings last at 6:25 - the alarm you set is not the alarm that wakes you."
+  },
+  {
+    "fn": "sliceTruth",
+    "args": [
+      3,
+      9
+    ],
+    "expected": "3 snoozes of 9 minutes is 27.0 minutes of doze in 3 slices - nobody dreams in 9 minutes."
+  },
+  {
+    "fn": "sliceTruth",
+    "args": [
+      1,
+      10
+    ],
+    "expected": "1 snooze of 10 minutes is 10.0 minutes of doze in 1 slice - nobody dreams in 10 minutes."
+  },
+  {
+    "fn": "sliceTruth",
+    "args": [
+      5,
+      9
+    ],
+    "expected": "5 snoozes of 9 minutes is 45.0 minutes of doze in 5 slices - nobody dreams in 9 minutes."
+  },
+  {
+    "fn": "sliceTruth",
+    "args": [
+      2,
+      15
+    ],
+    "expected": "2 snoozes of 15 minutes is 30.0 minutes of doze in 2 slices - nobody dreams in 15 minutes."
+  },
+  {
+    "fn": "marginTruth",
+    "args": [
+      "6:30",
+      "7:45",
+      9
+    ],
+    "expected": "From the 6:30 alarm to the 7:45 door there are 75 minutes - room for 8 snoozes of 9 with 3 minutes to spare; snooze number 9 eats the door."
+  },
+  {
+    "fn": "marginTruth",
+    "args": [
+      "7:00",
+      "8:00",
+      10
+    ],
+    "expected": "From the 7:00 alarm to the 8:00 door there are 60 minutes - room for 6 snoozes of 10 with 0 minutes to spare; snooze number 7 eats the door."
+  },
+  {
+    "fn": "marginTruth",
+    "args": [
+      "6:00",
+      "6:20",
+      9
+    ],
+    "expected": "From the 6:00 alarm to the 6:20 door there are 20 minutes - room for 2 snoozes of 9 with 2 minutes to spare; snooze number 3 eats the door."
+  },
+  {
+    "fn": "marginTruth",
+    "args": [
+      "5:30",
+      "7:30",
+      12
+    ],
+    "expected": "From the 5:30 alarm to the 7:30 door there are 120 minutes - room for 10 snoozes of 12 with 0 minutes to spare; snooze number 11 eats the door."
+  }
+]
