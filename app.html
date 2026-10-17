@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Snooze Math - app</title>
+<style>
+  :root { --accent:#3d5a80; --ink:#1c2531; --paper:#f6f9fc; --soft:#e8eef6; }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:Georgia, 'Times New Roman', serif; background:var(--paper); color:var(--ink); line-height:1.55; padding:2rem 1.2rem; }
+  main { max-width:660px; margin:0 auto; }
+  h1 { font-size:1.8rem; color:var(--accent); }
+  .boundary { background:#fdeaea; border-left:6px solid #b03030; color:#5c1c1c; border-radius:6px; padding:1rem 1.1rem; margin:1rem 0 1.4rem; }
+  .boundary strong { display:block; margin-bottom:.3rem; }
+  .panel { background:var(--soft); border-left:5px solid var(--accent); border-radius:6px; padding:1rem 1.1rem; margin-bottom:1.1rem; }
+  h2 { font-size:1.1rem; margin-bottom:.6rem; }
+  p.note { font-size:.9rem; margin-bottom:.4rem; }
+  label { display:block; font-size:.9rem; margin:.45rem 0 .1rem; }
+  input { width:100%; padding:.45rem .55rem; font-size:1rem; border:1px solid #b9c6da; border-radius:6px; background:#fff; color:var(--ink); }
+  .out { margin-top:.7rem; font-size:.98rem; background:#fff; border:1px dashed #b9c6da; border-radius:6px; padding:.6rem .7rem; min-height:2.4rem; }
+  .out.err { border-color:#b03030; color:#8a1f1f; font-style:normal; }
+  footer { margin-top:1.8rem; font-size:.85rem; color:#59667a; }
+  a { color:var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Snooze Math</h1>
+  <div class="boundary">
+    <strong>Boundary: clock arithmetic only</strong>
+    Minutes added to clocks, margins divided by snoozes. This page never tells you when to sleep or how much sleep you need.
+  </div>
+
+  <div class="panel">
+    <h2>The last-bell truth</h2>
+    <p class="note">The alarm you set is not the alarm that wakes you.</p>
+    <label for="l-alarm">Alarm time (HH:MM)</label>
+    <input id="l-alarm" type="text" value="6:30">
+    <label for="l-snoozes">Snoozes you actually take</label>
+    <input id="l-snoozes" type="number" min="0" step="1" value="3">
+    <label for="l-min">Snooze length (minutes)</label>
+    <input id="l-min" type="number" min="0" step="1" value="9">
+    <div class="out" id="l-out"></div>
+  </div>
+
+  <div class="panel">
+    <h2>The slice truth</h2>
+    <p class="note">What the snoozes actually add up to.</p>
+    <label for="s-snoozes">Snoozes</label>
+    <input id="s-snoozes" type="number" min="0" step="1" value="3">
+    <label for="s-min">Snooze length (minutes)</label>
+    <input id="s-min" type="number" min="0" step="1" value="9">
+    <div class="out" id="s-out"></div>
+  </div>
+
+  <div class="panel">
+    <h2>The margin truth</h2>
+    <p class="note">How many snoozes the morning actually has room for.</p>
+    <label for="m-alarm">Alarm time (HH:MM)</label>
+    <input id="m-alarm" type="text" value="6:30">
+    <label for="m-door">Out the door by (HH:MM)</label>
+    <input id="m-door" type="text" value="7:45">
+    <label for="m-min">Snooze length (minutes)</label>
+    <input id="m-min" type="number" min="0" step="1" value="9">
+    <div class="out" id="m-out"></div>
+  </div>
+
+  <footer>Snooze Math is exact clock arithmetic over your alarm and your door. <a href="index.html">Why it exists</a>.</footer>
+</main>
+<script src="engine.js"></script>
+<script>
+  const num = (id) => Number(document.getElementById(id).value);
+  const txt = (id) => document.getElementById(id).value;
+  function show(out, fn) {
+    try {
+      const text = fn();
+      out.textContent = text;
+      out.classList.remove("err");
+    } catch (e) {
+      out.textContent = e.message;
+      out.classList.add("err");
+    }
+  }
+  const lOut = document.getElementById("l-out");
+  const sOut = document.getElementById("s-out");
+  const mOut = document.getElementById("m-out");
+  function recalc() {
+    show(lOut, () => lastBellTruth(txt("l-alarm"), num("l-snoozes"), num("l-min")));
+    show(sOut, () => sliceTruth(num("s-snoozes"), num("s-min")));
+    show(mOut, () => marginTruth(txt("m-alarm"), txt("m-door"), num("m-min")));
+  }
+  document.querySelectorAll("input").forEach((el) => {
+    el.addEventListener("input", recalc);
+    el.addEventListener("change", recalc);
+  });
+  recalc();
+</script>
+</body>
+</html>
